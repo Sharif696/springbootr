@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  application:
+    image: microservices.jar
+    ports:
+      - "8080:8080"
+    networks:
+      - springboot-db-net
+    depends_on:
+      - mysqldb
+    volumes:
+      - /data/springboot-app
+    
+  mysqldb:
+    image: mysql:latest
+    networks:
+      - springboot-db-net
+    ports:
+      - 3307:3306  
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mydb
+    volumes:
+      - /data/mysql
+networks:
+  springboot-db-net:
